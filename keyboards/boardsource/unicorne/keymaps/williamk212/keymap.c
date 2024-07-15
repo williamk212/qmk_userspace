@@ -12,7 +12,8 @@ enum layers {
 
 // Tap Dance keycodes
 enum td_keycodes {
-    SYMBOL_LP_ENT
+    TD_SYMBOL_LP_ENT,
+    TD_LGUI_PLUS
 };
 
 // Define a type that contains all the tapdance states that we need
@@ -49,6 +50,9 @@ td_state_t cur_dance(tap_dance_state_t *state);
 void symlpent_finished(tap_dance_state_t *state, void *user_data);
 void symlpent_reset(tap_dance_state_t *state, void *user_data);
 
+void lguiplus_finished(tap_dance_state_t *state, void *user_data);
+void lguiplus_reset(tap_dance_state_t *state, void *user_data);
+
 td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
@@ -57,7 +61,7 @@ td_state_t cur_dance(tap_dance_state_t *state) {
     }
 
     if (state->count == 2) return TD_DOUBLE_SINGLE_TAP;
-    return TD_UNKNOWN;
+    return TD_SINGLE_TAP;
 }
 
 // `finished` and `reset` functions for each tapdance keycode
@@ -82,7 +86,7 @@ void symlpent_finished(tap_dance_state_t *state, void *user_data) {
 void symlpent_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
         case TD_SINGLE_TAP:
-            register_code16(KC_ENT);
+            unregister_code16(KC_ENT);
             break;
         case TD_SINGLE_HOLD:
             layer_off(_SYMBOL);
@@ -95,8 +99,43 @@ void symlpent_reset(tap_dance_state_t *state, void *user_data) {
     }
 }
 
+void lguiplus_finished(tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            register_code16(KC_PLUS);
+            break;
+        case TD_SINGLE_HOLD:
+            register_mods(MOD_BIT(KC_LGUI));
+            break;
+        case TD_DOUBLE_SINGLE_TAP:
+            tap_code16(KC_PLUS);
+            register_code16(KC_PLUS);
+            break;
+        default:
+            break;
+    }
+}
+
+void lguiplus_reset(tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            unregister_code16(KC_PLUS);
+            break;
+        case TD_SINGLE_HOLD:
+            unregister_mods(MOD_BIT(KC_LGUI));
+            break;
+        case TD_DOUBLE_SINGLE_TAP:
+            unregister_code16(KC_PLUS);
+            break;
+        default:
+            break;
+    }
+}
+
 tap_dance_action_t tap_dance_actions[] = {
-    [SYMBOL_LP_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, symlpent_finished, symlpent_reset)
+    [TD_SYMBOL_LP_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, symlpent_finished, symlpent_reset),
+    [TD_LGUI_PLUS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lguiplus_finished, lguiplus_reset)
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -106,7 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_TAB,     KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,                               KC_J,   KC_L,           KC_U,           KC_Y,           KC_SCLN,            KC_BSLS,
             KC_ESC,     LGUI_T(KC_A),   LALT_T(KC_R),   LCTL_T(KC_S),   LSFT_T(KC_T),   KC_G,                               KC_M,   RSFT_T(KC_N),   RCTL_T(KC_E),   RALT_T(KC_I),   RGUI_T(KC_O),       KC_QUOT,
             KC_LSFT,    KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,                               KC_K,   KC_H,           KC_COMM,        KC_DOT,         KC_SLSH,            KC_RSFT,
-                                LT(_MEDIA, KC_ESC),     LT(_NAV, KC_SPC),     LT(_MOUSE, KC_TAB),                           TD(SYMBOL_LP_ENT),    LT(_NUMBER, KC_BSPC),   LT(_SYMBOL, KC_DEL)
+                                LT(_MEDIA, KC_ESC),     LT(_NAV, KC_SPC),     LT(_MOUSE, KC_TAB),                           TD(TD_SYMBOL_LP_ENT),    LT(_NUMBER, KC_BSPC),   LT(_SYMBOL, KC_DEL)
             ),
 
     // QWERTY LAYER
@@ -120,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // symbol layer
 	[_SYMBOL] = LAYOUT_split_3x6_3(
             _______,    KC_EXLM,            KC_AT,              KC_HASH,            KC_DLR,          KC_PERC,               KC_CIRC,    KC_AMPR,            KC_ASTR,            KC_LBRC,            KC_RBRC,            _______,
-            _______,    LGUI_T(KC_PLUS),    LALT_T(KC_LPRN),    LCTL_T(KC_DQUO),    LSFT_T(KC_RPRN), KC_QUOTE,              KC_COLN,    RSFT_T(KC_LCBR),    RCTL_T(KC_EQL),     RALT_T(KC_RCBR),    RGUI_T(KC_SCLN),    _______,
+            _______,    TD(TD_LGUI_PLUS),      LALT_T(KC_LPRN),    LCTL_T(KC_DQUO),    LSFT_T(KC_RPRN), KC_QUOTE,              KC_COLN,    RSFT_T(KC_LCBR),    RCTL_T(KC_EQL),     RALT_T(KC_RCBR),    RGUI_T(KC_SCLN),    _______,
             _______,    KC_LABK,            KC_PIPE,            KC_MINS,            KC_RABK,         KC_BACKSLASH,          KC_GRV,     KC_UNDS,            KC_QUES,            KC_TILD,            _______,            _______,
                                                                                     _______, _______, _______,              _______, _______, _______
             ),
