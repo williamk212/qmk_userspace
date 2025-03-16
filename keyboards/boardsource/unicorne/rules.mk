@@ -7,6 +7,6 @@ MOUSEKEY_ENABLE = yes
 BOOTLOADER = rp2040
 
 # QMK specific
-TAP_DANCE_ENABLE = yes
-CONSOLE_ENABLE = yes
+#TAP_DANCE_ENABLE = yes
+# CONSOLE_ENABLE = no
 # SRC += features/custom_layer_toggle.c
