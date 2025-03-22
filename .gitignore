@@ -12,3 +12,8 @@
 
 # vscode
 *.code-workspace
+# clangd
+compile_commands.json
+.clangd/
+.cache/
+
