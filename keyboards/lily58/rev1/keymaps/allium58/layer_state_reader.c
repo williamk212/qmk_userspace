@@ -3,11 +3,11 @@
 
 #define L_BASE 0
 #define L_QWERTY 1
-#define L_SYMBOL 2
-#define L_NUMBER 3
-#define L_NAV 4
-#define L_MOUSE 5
-#define L_MEDIA 6
+#define L_SYMBOL (1 << 2)
+#define L_NUMBER (1 << 3)
+#define L_NAV (1 << 4)
+#define L_MOUSE (1 << 5)
+#define L_MEDIA (1 << 6)
 //#define L_ADJUST_TRI (L_ADJUST | L_RAISE | L_LOWER)
 
 char layer_state_str[24];
