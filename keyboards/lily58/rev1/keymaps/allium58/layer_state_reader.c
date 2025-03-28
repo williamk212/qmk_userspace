@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 #define L_BASE 0
-#define L_QWERTY 1
 #define L_SYMBOL (1 << 2)
 #define L_NUMBER (1 << 3)
 #define L_NAV (1 << 4)
@@ -12,14 +11,17 @@
 
 char layer_state_str[24];
 
-const char *read_layer_state(void) {
+const char *read_layer_state(layer_state_t current_base_layer) {
   switch (layer_state)
   {
   case L_BASE:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Colemak Mod-DH");
-    break;
-  case L_QWERTY:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: QWERTY");
+    if (current_base_layer == 0) {
+      snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Colemak Mod-DH");
+    } else if (current_base_layer == 1) {
+      snprintf(layer_state_str, sizeof(layer_state_str), "Layer: QWERTY");
+    } else {
+      snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Base-%u", current_base_layer);
+    }
     break;
   case L_SYMBOL:
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Symbol");

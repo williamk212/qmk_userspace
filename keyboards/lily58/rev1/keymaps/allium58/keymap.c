@@ -75,9 +75,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+/* BASE: colemak-DH
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | Tab  |   Q  |   W  |   F  |   P  |   B  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | ESC  |   A  |   R  |   S  |   T  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
+ * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
+ * |LShift|   Z  |   X  |   C  |   D  |   V  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+ *                   |      |      |      |/       /         \      \ |      |      |      |
+ *                   `----------------------------'           '------''--------------------'
+ */
+
     [_BASE] = LAYOUT(
         // base layer; colemak DH
-        KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
+        KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
         KC_TAB,   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                     KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINS,
         KC_ESC,   LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T),   KC_G,           KC_M, RSFT_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RGUI_T(KC_O), KC_QUOT,
         KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_D,    KC_V,      KC_LBRC,  KC_RBRC,          KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
@@ -95,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
  * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+ *                   | LAlt | ESC  |Space | /  Tab  /       \Enter \  |BackSP|  DEL | RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
@@ -113,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  | F10  | F11  | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |   `  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |   -  |
+ * |   `  |   +  |   (  |   "  |   )  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |   -  |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------|    |-------|      |   _  |   +  |   {  |   }  |   |  |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
@@ -144,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_NUMBER] = LAYOUT(
-  _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______,                     DF(_BASE), DF(_QWERTY), _______, _______, _______, _______,
   _______, KC_LBRC, KC_7,    KC_8,    KC_9,    KC_RBRC,                     _______, _______, _______, _______, _______, _______,
   _______, KC_SCLN, KC_4,    KC_5,    KC_6,    KC_EQL,                      _______, KC_RSFT, KC_RCTL, KC_RALT, KC_RGUI, _______,
   _______, KC_GRV,  KC_1,    KC_2,    KC_3,    KC_BSLS,     _______, _______,       _______, _______, _______, KC_LALT, _______, _______,
@@ -203,7 +218,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 }
 
 // When you add source files to SRC in rules.mk, you can use functions.
-const char *read_layer_state(void);
+const char *read_layer_state(layer_state_t current_base_layer);
 const char *read_logo(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
@@ -216,17 +231,17 @@ const char *read_keylogs(void);
 
 // Keep track of the current base layer to display its name
 // Moreover, read_layer_state() has been modified to take the base layer state as an argument
-// layer_state_t current_base_layer;
-// // run every time the base layer changes (https://docs.qmk.fm/feature_layers)
-// layer_state_t default_layer_state_set_user(layer_state_t state) {
-//   current_base_layer = get_highest_layer(state);
-//   return state;
-// }
+layer_state_t current_base_layer;
+// run every time the base layer changes (https://docs.qmk.fm/feature_layers)
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+  current_base_layer = get_highest_layer(state);
+  return state;
+}
 
 bool oled_task_user(void) {
   if (is_keyboard_master()) {
     // If you want to change the display of OLED, you need to change here
-    oled_write_ln(read_layer_state(), false);
+    oled_write_ln(read_layer_state(current_base_layer), false);
     oled_write_ln(read_keylog(), false);
     oled_write_ln(read_keylogs(), false);
     //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
