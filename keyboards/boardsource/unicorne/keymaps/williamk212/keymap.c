@@ -127,13 +127,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	[_MOUSE] = LAYOUT_split_3x6_3(
             _______,    _______,        _______,        _______,        _______,        _______,                            _______,    _______,    _______,        _______,        _______,            _______,
-            _______,    KC_LGUI,        KC_LALT,        KC_LCTL,        KC_LSFT,        _______,                            KC_MS_L,    KC_MS_D,    KC_MS_U,        KC_MS_R,        _______,            _______,
-            _______,    _______,        _______,        _______,        _______,        _______,                            _______,    KC_WH_D,    KC_WH_U,        _______,         _______,            _______,
-                                        _______,        _______,        _______,                                            KC_MS_BTN1,    KC_MS_BTN2,    KC_MS_BTN3
+            _______,    KC_LGUI,        KC_LALT,        KC_LCTL,        KC_LSFT,        _______,                            MS_LEFT,    MS_DOWN,    MS_UP,          MS_RGHT,        _______,            _______,
+            _______,    _______,        _______,        _______,        _______,        _______,                            _______,    MS_WHLD,    MS_WHLU,        _______,         _______,            _______,
+                                        _______,        _______,        _______,                                            MS_BTN1,    MS_BTN2,    MS_BTN3
             ),
 
     [_MEDIA] = LAYOUT_split_3x6_3(
-            _______,    _______,        _______,        _______,        _______,        _______,                            RGB_TOG,    RGB_MOD,            RGB_HUI,            RGB_SAI,        RGB_VAI,            _______,
+            _______,    _______,        _______,        _______,        _______,        _______,                            UG_TOGG,    UG_NEXT,            UG_HUEU,            UG_SATU,        UG_VALU,            _______,
             _______,    KC_LGUI,        KC_LALT,        KC_LCTL,        KC_LSFT,        _______,                            KC_MRWD,    KC_KB_VOLUME_DOWN,  KC_KB_VOLUME_UP,    KC_MFFD,        _______,            _______,
             _______,    _______,        _______,        _______,        _______,        _______,                            _______,    _______,            _______,            _______,        _______,            _______,
                                         _______,        _______,        _______,                                            _______,    KC_MPLY,    KC_AUDIO_MUTE
