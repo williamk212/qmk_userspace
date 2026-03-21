@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SYMBOL] = LAYOUT(
         _______,    _______,    _______,    _______,    _______,    _______,                        _______,    _______,    _______,    _______,    _______,    _______,
         _______,    KC_EXLM,    KC_AT,      KC_HASH,    KC_DLR,     KC_PERC,                        KC_CIRC,    KC_AMPR,    KC_ASTR,    KC_LBRC,    KC_RBRC,    _______,
-        _______, LGUI_T(KC_PLUS), LALT_T(KC_LPRN), LCTL_T(KC_DQUO), LSFT_T(KC_RPRN), KC_QUOTE,      KC_COLN, RSFT_T(KC_LCBR), RCTL_T(KC_EQL), RALT_T(KC_RCBR), RGUI_T(KC_SCLN), _______,
+        _______,    KC_PLUS,    KC_LPRN,    KC_DQUO,    KC_RPRN,    KC_QUOTE,                       KC_COLN, RSFT_T(KC_LCBR), RCTL_T(KC_EQL), RALT_T(KC_RCBR), RGUI_T(KC_SCLN), _______,
         _______,    KC_LABK,    KC_PIPE,    KC_MINS,    KC_RABK, KC_BACKSLASH, _______,     _______,KC_GRV,     KC_UNDS,    KC_QUES,    KC_TILD,    _______,    _______,
                                 _______,    _______,    _______,    _______,                        _______,  _______, _______, _______
     ),
@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,    KC_LBRC,    KC_7,       KC_8,       KC_9,       KC_RBRC,                        _______,    _______,    _______,    _______,    _______,    _______,
         _______,    KC_SCLN,    KC_4,       KC_5,       KC_6,       KC_EQL,                         _______,    KC_RSFT,    KC_RCTL,    KC_RALT,    KC_RGUI,    _______,
         _______,    KC_GRV,     KC_1,       KC_2,       KC_3,       KC_BSLS, _______,     _______,  _______,    _______,    _______,    KC_LALT,    _______,    _______,
-                                _______,    _______,    _______,    _______,                        _______,  _______, _______, _______
+                                _______,    KC_DOT,     KC_0,       KC_MINUS,                       _______,  _______, _______, _______
     ),
 /* ADJUST
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -123,3 +123,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 _______,    _______,    _______,    _______,                        _______,    KC_MPLY, KC_AUDIO_MUTE, _______
     ),
 };
+
+#if defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+
+};
+#endif // defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
