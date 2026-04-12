@@ -28,8 +28,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define OLED_FONT_H "lib/glcdfont_lily.c"
 
-#define QUICK_TAP_TERM 0
-#define TAPPING_TERM 200
+// potentially fixing the home row delays
+// https://www.reddit.com/r/ErgoMechKeyboards/comments/1q1jo3c/urobs_zmk_timeless_home_row_mods_ported_to_native/
+// https://github.com/urob/zmk-config?tab=readme-ov-file#timeless-homerow-mods
+#define TAPPING_TERM 250
+#define PERMISSIVE_HOLD
+#define FLOW_TAP_TERM 150
+#define CHORDAL_HOLD
+#define SPECULATIVE_HOLD
 
 #undef RGBLIGHT_LED_COUNT
 #define RGBLIGHT_EFFECT_BREATHING

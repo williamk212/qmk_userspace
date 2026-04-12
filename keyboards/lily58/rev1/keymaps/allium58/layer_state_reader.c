@@ -16,10 +16,12 @@ const char *read_layer_state(layer_state_t current_base_layer) {
   {
   case L_BASE:
     if (current_base_layer == 0) {
-      snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Colemak Mod-DH");
-    } else if (current_base_layer == 1) {
       snprintf(layer_state_str, sizeof(layer_state_str), "Layer: QWERTY");
-    } else {
+    }
+    // else if (current_base_layer == 1) {
+    //   snprintf(layer_state_str, sizeof(layer_state_str), "Layer: QWERTY");
+    // }
+    else {
       snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Base-%u", current_base_layer);
     }
     break;
